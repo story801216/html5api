@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>XHR Async</title>
+</head>
+<body>
+<button id="load_btn">load</button>
+<br>
+<button>test</button>
+
+<script>
+	load_btn.onclick = function(){
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			console.log(this.readyState, this.status);
+			if(this.readyState===4 && this.status===200){
+                load_btn.innerHTML = this.responseText;
+			}
+		};
+		xhr.open('GET', '/pending', true); // 非同步
+		xhr.send();
+	};
+</script>
+
+</body>
+</html>

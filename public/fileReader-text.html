@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>FileReader</title>
+	<style>
+		.container {
+			position: relative;
+			width: 800px;
+			height: 600px;
+			background-color: #b0e9ff;
+		}
+	</style>
+</head>
+<body>
+<input type="file" id="fileFiled" style="display: none;"
+	   accept="text/*">
+<button>open text file</button><br>
+<textarea class="container" rows="100" cols="80"></textarea>
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	const container = $('.container');
+	const fileFiled = $('#fileFiled');
+	$('button').click(function(event){
+		fileFiled.click();
+	});
+	const readerLoaded = event=>{
+		container.append(event.target.result);
+	};
+	fileFiled.on('change', function(event){
+		let file, reader;
+		for(let i=0; i<fileFiled[0].files.length; i++){
+			file = fileFiled[0].files[i];
+			reader = new FileReader();
+			reader.addEventListener('load', readerLoaded);
+			reader.readAsText(file);
+		}
+	});
+</script>
+
+</body>
+</html>

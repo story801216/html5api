@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 600px auto;
+    grid-gap: 20px 20px; /* grid-row-gap, grid-column-gap */
+    justify-content: space-evenly; /* 空白等寬 */
+    /* align-content 垂直對位置 */
+}
+.container > div {
+    width: 320px;
+    text-align: center;
+}
+
+

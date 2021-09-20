@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Drag and drop</title>
+
+	<style>
+		.container {
+			position: relative;
+			width: 800px;
+			height: 600px;
+			background-color: #b0e9ff;
+		}
+	</style>
+</head>
+<body>
+<input type="file" id="fileFiled" style="display: none;"
+	   multiple accept="image/*">
+<div class="container">點擊選取檔案</div>
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	const container = $('.container');
+	const fileFiled = $('#fileFiled');
+	container.on('click', function(event){
+		fileFiled.click();
+	});
+	fileFiled.on('change', function(event){
+		// fileFiled[0] 才是 element, fileFiled 是 jQuery 物件
+		for(let i=0; i<fileFiled[0].files.length; i++){
+			container.append('<br>' + fileFiled[0].files[i].name);
+		}
+	});
+</script>
+
+</body>
+</html>

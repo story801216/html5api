@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>array filter 過濾</title>
+</head>
+<body>
+<div id="info"></div>
+
+<script>
+const ar = [ 1, '2', '3', 4, 3, 5, '6', '7', 8];
+
+const ar2 = ar.filter((el,i)=> typeof el==='number')
+const ar3 = ar.filter((el,i)=> el!=3)
+
+console.log(ar2);
+console.log(ar3);
+</script>
+</body>
+</html>

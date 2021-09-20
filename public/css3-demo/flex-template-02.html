@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container"></div>
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+        
+
+        function rand3d(){
+            const tmp = '012345678';
+            let str = ''
+            for(let i=0; i<3; i++){
+                str += tmp.charAt(Math.floor(Math.random()*tmp.length));
+            }
+            return str;
+        }
+        function randUrl(){
+            const wh = [300, 400, 500, 600];
+            const w = wh[Math.floor(Math.random()*wh.length)];
+            const h = wh[Math.floor(Math.random()*wh.length)];
+            const c = rand3d();
+            return `https://dummyimage.com/${w}x${h}/${c}/fff`
+        }
+
+        let str = '';
+        for(let i=1;i <=10; i++) {
+            str += `<img src="${randUrl()}">`;
+        }
+        container.innerHTML = str;
+    </script>
+</body>
+</html>

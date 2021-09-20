@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+	const info = document.querySelector('#info');
+	let db;
+
+	const errorHandler = event=>{
+		info.innerHTML += `error: ${event.target.error}<br>`;
+	};
+	const onUpdateSuccess = event=>{
+		info.innerHTML += `修改完成 ${event.target.result}<br>`;
+	};
+	const dbOpenSuccess = event=>{
+		db = event.target.result;
+		const trans = db.transaction(['addressBook'], 'readwrite');
+		const store = trans.objectStore('addressBook');
+		// 若沒有此 id  將會變成新增
+		const req = store.put({sid:12, name: '林小德', email: 'hwa@bbb.com', mobile: '0918-777-888' });
+		req.addEventListener('success', onUpdateSuccess);
+		req.addEventListener('error', errorHandler);
+	};
+
+	const openDBReq = indexedDB.open('mydb', 1);
+	openDBReq.addEventListener('error', errorHandler);
+	openDBReq.addEventListener('success', dbOpenSuccess);
+</script>
+</body>
+</html>

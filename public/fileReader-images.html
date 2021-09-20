@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>FileReader</title>
+	<style>
+		.container {
+			position: relative;
+			width: 800px;
+			height: 600px;
+			background-color: #b0e9ff;
+		}
+	</style>
+</head>
+<body>
+<input type="file" id="fileFiled" style="display: none;"
+	   multiple accept="image/*">
+<button>add image</button>
+<div class="container"></div>
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	const container = $('.container');
+	const fileFiled = $('#fileFiled');
+	$('button').click(function(event){
+		fileFiled.click();
+	});
+	const readerLoaded = event=>{
+		let image = new Image();
+		image.height = 150;
+		image.src = event.target.result; // 將結果設定給 img
+		container.append(image)
+	};
+	fileFiled.on('change', function(event){
+		let file, reader;
+		for(let i=0; i<fileFiled[0].files.length; i++){
+			file = fileFiled[0].files[i];
+			reader = new FileReader();
+			reader.addEventListener('load', readerLoaded);
+			reader.readAsDataURL(file);
+		}
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>解構</title>
+</head>
+<body>
+<script>
+const person = {
+    name: "carl",
+    age: 26,
+    gender: "male",
+}
+
+const {name: nickname, age} = person;
+console.log(nickname, age);
+
+const person2 =  {...person, test:"hi"}
+console.log(person2);
+</script>
+</body>
+</html>

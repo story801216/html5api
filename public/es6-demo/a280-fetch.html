@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fetch api</title>
+</head>
+<body>
+<pre id="info"></pre>
+<script>
+    const info = document.querySelector('#info');
+    (async()=>{
+        const r = await fetch(location.href);
+        info.innerText = await r.text();
+    })();
+</script>
+</body>
+</html>

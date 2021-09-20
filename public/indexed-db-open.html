@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+	const info = document.querySelector('#info');
+	let db;
+
+	const errorHandler = event=>{
+		info.innerHTML += `error: ${event.target.error}<br>`;
+	};
+	const dbUpgradeNeeded = event=>{
+		info.innerHTML += `需要升級<br>`;
+		db = event.target.result; // openDBReq.result
+	};
+	const dbOpenSuccess = event=>{
+		info.innerHTML += `開啟成功<br>`;
+		db = event.target.result; // openDBReq.result
+		info.innerHTML += `db: ${db.constructor.name}<br>`;
+	};
+
+	const openDBReq = indexedDB.open('mydb', 1);
+	info.innerHTML += `openDBReq: ${openDBReq.constructor.name}<br>`;
+	openDBReq.addEventListener('error', errorHandler);
+	openDBReq.addEventListener('success', dbOpenSuccess);
+	openDBReq.addEventListener('upgradeneeded', dbUpgradeNeeded);
+</script>
+</body>
+</html>

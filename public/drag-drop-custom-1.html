@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Drag and drop</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#rect {
+			position: absolute;
+			width: 800px;
+			height: 600px;
+			background-color: #b0e9ff;
+		}
+		.ball {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			background-color: #2c47ff;
+			border-radius: 50%;
+			left: 100px;
+			top: 100px;
+		}
+		.rect2 {
+			position: absolute;
+			width: 240px;
+			height: 240px;
+			background-color: #ff943b;
+			left: 420px;
+			top: 150px;
+		}
+	</style>
+</head>
+<body>
+<div id="rect">
+	<div id="b1" class="ball" ></div>
+	<div id="b2" class="ball" style="background-color: red; top:250px"></div>
+	<div class="rect2"></div>
+</div>
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	let dragTarget;
+	const offset = {x:0, y:0};
+	const mDown = function(event){
+		const $el = $(event.target);
+		if($el.hasClass('ball')){
+			console.log($el[0]);
+			dragTarget = $el;
+			offset.x = event.offsetX;
+			offset.y = event.offsetY;
+			$(window).on('mousemove', mMove);
+		}
+	};
+	const mUp = function(event){
+		dragTarget = null;
+		$(window).off('mousemove', mMove);
+	};
+	const mMove = function(event){
+		if(dragTarget) {
+			dragTarget.css({
+				left: event.pageX - offset.x,
+				top: event.pageY - offset.y,
+			})
+		}
+	};
+
+	$('#rect').on('mousedown', mDown);
+	$(window).on('mouseup', mUp);
+
+</script>
+
+</body>
+</html>

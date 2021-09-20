@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>箭頭函式的特性</title>
+</head>
+<body>
+<script>
+const obj = {
+    v: this,
+    f3: ()=>{
+        return this;
+    },
+    f4: function(){
+        return this;
+    },
+    f5(){
+        return this;
+    }
+};
+
+console.log(obj.f3())
+console.log(obj.f4())
+console.log(obj.f5())
+
+console.log('----------------')
+
+const a = {
+    f3: obj.f3,
+    f4: obj.f4,
+};
+console.log(a.f3())
+console.log(a.f4())
+</script>
+</body>
+</html>

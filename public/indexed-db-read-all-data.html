@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+	const info = document.querySelector('#info');
+	let db;
+	const errorHandler = event=>{
+		info.innerHTML += `error: ${event.target.error}<br>`;
+	};
+	const dbOpenSuccess = event=>{
+		db = event.target.result;
+		const trans = db.transaction(['addressBook'], 'readonly');
+		const store = trans.objectStore('addressBook');
+		// dbReq 為 IDBRequest 類型
+		const dbReq = store.openCursor(); // 開啟「資料游標」並讀取第一筆
+		dbReq.onsuccess = event=>{
+			const result = event.target.result; // IDBCursorWithValue
+			if(!result) return; // 讀到最後沒資料時
+			info.innerHTML += JSON.stringify(result.value) + '<br>';
+			result.continue(); // 讀取下一筆
+		};
+	};
+	const openDBReq = indexedDB.open('mydb', 1);
+	openDBReq.addEventListener('error', errorHandler);
+	openDBReq.addEventListener('success', dbOpenSuccess);
+</script>
+</body>
+</html>

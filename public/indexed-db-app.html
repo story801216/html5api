@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		table, tr, td {
+			border-collapse: collapse;
+			border: 1px solid gray;
+		}
+		thead {
+			background-color: #ffdc60;
+		}
+		tbody>tr:nth-child(2n) {
+			background-color: #8dd0ff;
+		}
+	</style>
+</head>
+<body>
+<div id="info"></div>
+<form name="form1" onsubmit="addData(); return false;">
+	<input type="text" name="name" placeholder="姓名" required>
+	<input type="number" name="age" placeholder="年齡">
+	<input type="email" name="email" placeholder="電子郵箱">
+	<input type="tel" name="mobile" placeholder="手機號碼">
+	<input type="submit" value="新增">
+</form>
+<hr>
+<table>
+	<thead>
+	<tr>
+		<td>刪除</td>
+		<td>姓名</td>
+		<td>年齡</td>
+		<td>電子郵箱</td>
+		<td>手機</td>
+	</tr>
+	</thead>
+	<tbody id="the-list">
+	</tbody>
+</table>
+<script>
+	let myDB;
+	const dbName = 'mydb2';
+	const dbVersion = 1;
+	const objectStoreName = 'addressBook';
+	const tbody = document.querySelector('#the-list');
+
+    // 取得 db 物件
+	function getDB() {
+	    return new Promise((resolve, reject)=>{
+            const openDBReq = indexedDB.open(dbName, dbVersion);
+            openDBReq.onerror = event=>{
+                reject('開啟資料庫錯誤：' + event.target.error);
+			};
+            openDBReq.onsuccess = event=>{
+                console.log('open success');
+                resolve(event.target.result); // db instance
+			};
+            openDBReq.onupgradeneeded = event=>{
+                const db = event.target.result;
+                const store = db.createObjectStore(objectStoreName, {
+                    keyPath: 'sid',
+                    autoIncrement: true
+                });
+                store.createIndex('emailIndex', 'email', {unique: true});
+                store.createIndex('ageIndex', 'age', {unique: false});
+                db._justCreated = true; // 自行設定的屬性
+			};
+		});
+	}
+
+	// 新增單筆資料
+	function insertOne(dataObj) {
+	    //{ name: '李小明', age: 23, email: 'ming@ggg.com', mobile: '0918-111-222'
+        return new Promise((resolve, reject)=>{
+            if(!dataObj || !dataObj.name){
+                reject('新增資料沒有 name 欄位');
+ 			    return;
+			}
+            const trans = myDB.transaction([objectStoreName], 'readwrite');
+            const store = trans.objectStore(objectStoreName);
+			const req = store.add(dataObj);
+            req.onerror = event=>{
+                event.preventDefault();
+                reject('新增資料錯誤：' + event.target.error);
+			};
+			req.onsuccess = event=>{
+                resolve({
+					type: 'success',
+					id: event.target.result,
+				});
+			};
+		});
+	}
+
+    // 修改資料
+    function editOne(dataObj) {
+        return new Promise((resolve, reject)=>{
+            if(!dataObj || !dataObj.sid){
+                reject('修改資料沒有 sid 欄位');
+                return;
+            }
+            const trans = myDB.transaction([objectStoreName], 'readwrite');
+            const store = trans.objectStore(objectStoreName);
+            const req = store.put(dataObj);
+            req.onerror = event=>{
+                reject('條改資料錯誤：' + event.target.error);
+            };
+            req.onsuccess = event=>{
+                resolve({
+                    type: 'success',
+                    sid: event.target.result,
+                });
+            };
+        });
+    }
+
+    // 移除單筆資料
+    function removeOne(sid) {
+        return new Promise((resolve, reject)=>{
+            if(!sid){
+                reject('刪除資料請給 primary key');
+                return;
+            }
+            const trans = myDB.transaction([objectStoreName], 'readwrite');
+            const store = trans.objectStore(objectStoreName);
+            const req = store.delete(sid);
+            req.onerror = event=>{
+                reject('刪除資料錯誤：' + event.target.error);
+            };
+            req.onsuccess = event=>{
+                resolve({
+                    type: 'success',
+                });
+            };
+        });
+    }
+    
+    // 取得所有資料
+    function getAllData() {
+        return new Promise((resolve, reject)=>{
+			const data = []; // 存放取得的資料
+            const trans = myDB.transaction([objectStoreName], 'readonly');
+            const store = trans.objectStore(objectStoreName);
+            const req = store.openCursor(); // 開啟「資料游標」並讀取第一筆
+            req.onerror = event=>{
+                reject('讀取資料錯誤：' + event.target.error);
+            };
+            req.onsuccess = event=>{
+                const result = event.target.result; // IDBCursorWithValue
+                // 讀到最後沒資料時
+                if(!result) {
+                    resolve(data);
+                    return;
+                }
+                data.push(result.value);
+                result.continue(); // 讀取下一筆
+            };
+        });
+	}
+
+	// ---------------------------------- 以上為操作資料庫的方法 -------------------
+
+	// 顯示所有資料
+	function showAllData() {
+	    getAllData()
+			.then(data=>{
+				console.log(data);
+				tbody.innerHTML = '';
+				data.forEach(item=>{
+			        tbody.innerHTML += `
+						<tr id="row-${item.sid}" data-sid="${item.sid}">
+							<td><a href="javascript: removeItem(${item.sid}, '${item.name}')">X</a></td>
+							<td contenteditable="true">${item.name}</td>
+							<td contenteditable="true">${item.age}</td>
+							<td contenteditable="true">${item.email}</td>
+							<td contenteditable="true">${item.mobile}</td>
+						</tr>
+			        `;
+				});
+			});
+	}
+
+	// 刪除項目
+	function removeItem(sid, name) {
+	    if(confirm(`確定要移除姓名為「${name}」的資料？`))
+	    removeOne(sid)
+			.then(()=>{
+			    document.querySelector('#row-' + sid).remove();
+			});
+	}
+
+	// 新增資料
+	function addData(){
+        insertOne({
+			name: document.form1.name.value,
+			age: document.form1.age.value,
+			email: document.form1.email.value,
+			mobile: document.form1.mobile.value
+        })
+			.then(()=>{
+                showAllData();
+                alert('資料新增完成');
+			})
+			.catch(ex=>{
+			    alert('Email 不能重複！');
+			});
+	}
+
+    getDB()
+		.then(db=>{
+			myDB = db;
+			// 若是剛剛才建立，新增現成資料
+			if(db._justCreated){
+				insertOne({name: '李小明', age: 23, email: 'ming@ggg.com', mobile: '0918-111-222'})
+					.then(()=>{
+						return insertOne({name: '陳小強', age: 23,  email: 'chung@aaa.com', mobile: '0918-333-555'})
+					})
+					.then(()=>{
+						return insertOne({name: '吳小華1', age: 33,  email: 'h9wa@bbb.com', mobile: '0918-777-888'})
+					});
+			}
+		})
+		.then(()=>{
+		    showAllData();
+		});
+
+	// 變更時
+	window.addEventListener('input', function(event){
+	    let el = event.target;
+	    let sid, data={}, tds;
+        console.log(`el.tagName: ${el.tagName}`);
+	    if(el.tagName.toLowerCase() !== 'td') return;
+	    el = el.closest('tr');
+	    console.log(el);
+		sid = el.getAttribute('data-sid') * 1; // 記得轉換為 number
+		if(!sid) return;
+		tds = el.querySelectorAll('td');
+        editOne({
+            name: tds[1].innerText,
+            age: tds[2].innerText,
+            email: tds[3].innerText,
+            mobile: tds[4].innerText,
+            sid: sid,
+		})
+			.catch(ex=>{
+			    alert(ex);
+			})
+	});
+</script>
+</body>
+</html>

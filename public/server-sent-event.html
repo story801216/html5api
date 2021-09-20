@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info">123</div>
+<script>
+	const info = document.querySelector('#info');
+	const es = new EventSource('/try-sse');
+
+	es.addEventListener('open', function(event) {
+		info.style.backgroundColor = 'orange';
+		console.log(new Date().toLocaleString(), event);
+	});
+	es.addEventListener('message', function(event) {
+		// console.log('message: ', event);
+		info.innerHTML = event.lastEventId + ': ' + event.data;
+	});
+	es.addEventListener('error', function(event) {
+		console.log(new Date().toLocaleString(), event);
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>XHR sync</title>
+</head>
+<body>
+<button id="load_btn">load</button>
+<br>
+<button>test</button>
+
+<script>
+	load_btn.onclick = function(){
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', '/pending', false); // 同步
+		xhr.send();
+        load_btn.innerHTML = xhr.responseText;
+	};
+</script>
+
+</body>
+</html>

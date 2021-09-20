@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 10px 50px; /* grid-row-gap, grid-column-gap */
+    
+}
+
+.container > div {
+    text-align: center;
+}
+
+.c1 {
+    grid-column-start: 2; /* 位置從 1 開始 */
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		table, tr, td {
+			border-collapse: collapse;
+			border: 1px solid gray;
+		}
+		thead {
+			background-color: #629bff;
+		}
+		tbody>tr:nth-child(2n) {
+			background-color: #8dd0ff;
+		}
+	</style>
+</head>
+<body>
+<a href="localStorage-setItem.html">新增項目</a>
+<table>
+	<thead>
+	<tr>
+		<td>刪除</td>
+		<td>姓名</td>
+		<td>年齡</td>
+		<td>手機</td>
+	</tr>
+	</thead>
+	<tbody id="the-list">
+	</tbody>
+</table>
+
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	const prefix = 'friend-book;;';
+	const tbody = $('#the-list');
+	let bData = [];
+	const showList = ()=>{
+		bData = [];
+		tbody.html('');
+		for(let i=0; i<localStorage.length; i++) {
+			let key = localStorage.key(i);
+			if(key.indexOf(prefix)===0) {
+				let d = localStorage.getItem(key);
+				d = JSON.parse(d);
+				d.key = key;
+				bData.push(d);
+				tbody.append(`<tr><td><a href="javascript:removeItem('${key}')">X</a></td>
+					<td>${d.name}</td>
+					<td>${d.age}</td><td>${d.mobile}</td></tr>`);
+			}
+		}
+	};
+	showList();
+
+	const removeItem = (key)=>{
+		if(!confirm('確定要移除項目？')) return;
+		localStorage.removeItem(key);
+		showList();
+	};
+</script>
+</body>
+</html>

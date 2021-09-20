@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>物件陣列排序</title>
+    <style>
+        #myt, #myt td {
+            border: #3d61cd solid 1px;
+        }
+    </style>
+</head>
+<body>
+<div id="info">
+</div>
+<select id="sel">
+    <option value="age1">年紀由小到大</option>
+    <option value="age2">年紀由大到小</option>
+    <option value="name1">姓名由小到大</option>
+    <option value="name2">姓名由大到小</option>
+</select>
+
+<table id="myt"></table>
+
+<script>
+    const people = [
+        {
+            name: "carl",
+            age: 26,
+        }, {
+            name: "Bill",
+            age: 20,
+        }, {
+            name: "flora",
+            age: 22,
+        }, {
+            name: "aaron",
+            age: 25,
+        }, {
+            name: "bob",
+            age: 30,
+        },
+    ]
+
+    const render = ()=>{
+        document.querySelector('#myt').innerHTML = people.map(el=>{
+            return `<tr>
+                <td>${el.name}</td>
+                <td>${el.age}</td>
+            </tr>`;
+        }).join('')
+    }
+
+    const sortFn = {
+        'age1': (a, b)=>{
+            return a.age-b.age; // 由小到大
+        },
+        'age2': (a, b)=>{
+            return b.age-a.age;
+        },
+        'name1': (a, b)=>{
+            return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+        },
+        'name2': (a, b)=>{
+            return a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1;
+        },
+    };
+
+    const sel = document.querySelector('#sel');
+    sel.addEventListener('change', function(event){
+        people.sort(sortFn[sel.value]);
+        render();
+    });
+
+    sel.dispatchEvent(new Event('change'));
+</script>
+</body>
+</html>

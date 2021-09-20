@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: absolute;
+            width: 640px;
+            height: 480px;
+            background-color: #DDD;
+        }
+        .ball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid black;
+            background-color: rgb(68, 68, 240);
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation: action1 2s linear 1s;
+            /* animation: action1 2s linear 1s infinite; */
+            /* animation: action1 2s linear 1s infinite alternate; */
+        }
+        @keyframes action1 {
+            0% {left: 0%}
+            25% {left: 50%}
+            50% {left: 75%}
+            75% {left: 87%}
+            100% {left: 93%}
+        }
+    </style>
+</head>
+<body>
+    <div class="rect">
+        <div class="ball"></div>
+    </div>
+</body>
+</html>

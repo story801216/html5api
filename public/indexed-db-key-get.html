@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+	const info = document.querySelector('#info');
+	let db;
+	const errorHandler = event=>{
+		info.innerHTML += `error: ${event.target.error}<br>`;
+	};
+	const dbOpenSuccess = event=>{
+		db = event.target.result;
+		const trans = db.transaction(['addressBook'], 'readonly');
+		const store = trans.objectStore('addressBook');
+
+		//const dbReq = store.get(2); // 使用 primary key
+		//const dbReq = store.index('ageIndex').get(23);
+		const dbReq = store.index('emailIndex').get('chung@aaa.com');
+
+		dbReq.onsuccess = event=>{
+			const result = event.target.result; // 資料 Object
+			info.innerHTML += JSON.stringify(result) + '<br>';
+		};
+	};
+	const openDBReq = indexedDB.open('mydb', 1);
+	openDBReq.addEventListener('error', errorHandler);
+	openDBReq.addEventListener('success', dbOpenSuccess);
+</script>
+</body>
+</html>

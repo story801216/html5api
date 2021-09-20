@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Map 類型</title>
+    <style>
+        #info {
+            position:absolute;
+        }
+        .ball {
+            border-radius:50%;
+            text-align:center;
+            position:absolute;
+
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="info">
+</div>
+<script>
+    const map = new Map;
+    const people = [
+        {
+            name: "carl",
+            age: 26,
+        }, {
+            name: "Bill",
+            age: 20,
+        }, {
+            name: "flora",
+            age: 22,
+        }, {
+            name: "aaron",
+            age: 25,
+        }, {
+            name: "bob",
+            age: 30,
+        },
+    ];
+
+    const myClick = function(event){
+        console.log(map.get(event.currentTarget));
+    };
+
+    for(let i of people){
+        const el = document.createElement('div');
+        el.className = 'ball';
+        el.style.width = '60px';
+        el.style.height = '60px';
+        el.style.lineHeight = '60px';
+        el.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        el.innerHTML = i.name;
+        el.style.left = Math.random()*400 + 'px';
+        el.style.top = Math.random()*300 +'px';
+        info.appendChild(el);
+
+        map.set(el, i);
+        el.addEventListener('click', myClick);
+    }
+</script>
+</body>
+</html>

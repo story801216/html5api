@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Set 類型</title>
+</head>
+<body>
+<div id="info">
+</div>
+<script>
+    const set = new Set();
+    const aa = {name: "aaron"};
+    const bb = {name: "bob"};
+    const cc = aa;
+
+    set.add(aa);
+    set.add(bb);
+    set.add(cc);
+    set.add({});
+    set.add({});
+
+    set.forEach(v => {
+        console.log(JSON.stringify(v));
+    });
+
+    console.log([...set]);
+</script>
+</body>
+</html>

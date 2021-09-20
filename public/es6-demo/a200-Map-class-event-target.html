@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Map 類型, event.target</title>
+    <style>
+        #info {
+            position:absolute;
+            width: 400px;
+            height: 300px;
+            background-color: aqua;
+        }
+        .ball {
+            border-radius:50%;
+            text-align:center;
+            position:absolute;
+
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="info">
+    <div>ttt</div>
+</div>
+<script>
+    const map = new Map;
+    const people = [
+        {
+            name: "carl",
+            age: 26,
+        }, {
+            name: "Bill",
+            age: 20,
+        }, {
+            name: "flora",
+            age: 22,
+        }, {
+            name: "aaron",
+            age: 25,
+        }, {
+            name: "bob",
+            age: 30,
+        },
+    ];
+
+    const myClick = function(event){
+        const t = event.target; // 最裡面點到的 element (tag)
+        console.log(t);
+        if(t.classList.contains('ball')){
+            console.log(map.get(t));
+        }
+    };
+
+
+    for(let i of people){
+        const el = document.createElement('div');
+        el.className = 'ball';
+        el.style.width = '60px';
+        el.style.height = '60px';
+        el.style.lineHeight = '60px';
+        el.style.backgroundColor = 'red';
+        el.innerHTML = i.name;
+        el.style.left = Math.random()*400 + 'px';
+        el.style.top = Math.random()*300 +'px';
+        info.appendChild(el);
+        map.set(el, i);
+    }
+
+    info.addEventListener('click', myClick);
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

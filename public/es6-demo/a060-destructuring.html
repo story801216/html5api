@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>解構</title>
+</head>
+<body>
+<script>
+const p1 = {
+    name: "carl",
+    age: 26,
+    gender: "male",
+    data: {a:10, b:20}
+}
+const p2 = p1;
+const p3 = {...p1}; // duplicate, 淺層 copy
+const p4 = {};
+
+for(let i in p1){
+    p4[i] = p1[i];
+}
+
+p1.name = "David";
+p1.data.a = 999;
+
+console.log(p1)
+console.log(p2)
+console.log(p3)
+console.log(p4)
+</script>
+</body>
+</html>

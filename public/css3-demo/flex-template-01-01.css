@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    /* flex-direction: row; 預設值 */
+    /* flex-direction: column-reverse; */
+}
+
+.container > div {
+    /* flex: none; 預設值 */
+    flex: auto;
+}
+

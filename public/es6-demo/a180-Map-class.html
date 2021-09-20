@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Map 類型</title>
+</head>
+<body>
+<div id="info">
+</div>
+<script>
+    const map = new Map();
+
+    const aa = {name:"aaron"};
+    const bb = {name:"bob"};
+    const cc = aa;
+
+    map.set(aa, 123);
+    map.set(bb, 456);
+    map.set(cc, 789);
+    map.set({}, 'Hello');
+    map.set({}, 'Hi');
+
+    map.forEach((v, k) => {
+        console.log(k, v);
+    });
+    console.log('------');
+    console.log(map.size);
+    console.log(map.keys());
+    console.log(...map.keys());
+    console.log([...map.values()]);
+</script>
+</body>
+</html>

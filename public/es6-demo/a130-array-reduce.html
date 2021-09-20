@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>array reduce</title>
+</head>
+<body>
+<div id="info"></div>
+
+<script>
+const ar = [ 1, '2', '3', 4, 3, 5, '6', '7', 8];
+
+const v = ar.reduce((prev, el,i)=>{
+    console.log(prev, el, i);
+    return prev*1 + el*1;
+})
+console.log('v:', v);
+console.log('ar:', ar);
+</script>
+</body>
+</html>

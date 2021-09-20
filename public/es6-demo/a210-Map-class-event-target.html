@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Map 類型, event.target, jQuery</title>
+    <style>
+        #info {
+            position:absolute;
+            width: 400px;
+            height: 300px;
+            background-color: aqua;
+        }
+        .ball {
+            border-radius:50%;
+            text-align:center;
+            position:absolute;
+
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="info">
+    <div>ttt</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const info = $('#info');
+    const map = new Map;
+    const people = [
+        {
+            name: "carl",
+            age: 26,
+        }, {
+            name: "Bill",
+            age: 20,
+        }, {
+            name: "flora",
+            age: 22,
+        }, {
+            name: "aaron",
+            age: 25,
+        }, {
+            name: "bob",
+            age: 30,
+        },
+    ];
+
+    const myClick = function(event){
+        const t = $(event.target);
+        console.log(t);
+        if(t.hasClass('ball')){
+            console.log(map.get(t[0]));
+        }
+    };
+
+    for(let i of people){
+        const el =  $(`<div class="ball">${i.name}</div>`);  // create jquery object
+        el.css({
+            width: 60,
+            height: 60,
+            left: Math.random()*400,
+            top: Math.random()*300,
+            lineHeight: '60px',
+            backgroundColor: `hsl(${Math.random()*360},100%,50%)`,
+        })
+        info.append(el);
+        map.set(el[0], i);
+    }
+
+    info.on('click', myClick);
+</script>
+</body>
+</html>

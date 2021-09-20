@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<input type="text" id="user" placeholder="請輸入名字">
+<button id="connectBtn">連線</button><br>
+<textarea id="msgArea" cols="50" rows="30" readonly></textarea><br>
+<input type="text" id="msg"><button id="sendBtn">送出</button>
+<script>
+let socket;
+const myOpen = event=>{
+	socket.send(user.value);
+};
+const myMessage = event=>{
+	msgArea.value += `${event.data}\n`;
+};
+document.addEventListener('click', event=>{
+	switch(event.target.id){
+		case 'connectBtn':
+			if(! user.value){
+				alert('請輸入名字');
+				return;
+			}
+			if(socket && socket.readyState===WebSocket.OPEN)
+				return;
+			socket = new WebSocket(`ws://${location.host}`);
+			socket.addEventListener('open', myOpen);
+			socket.addEventListener('message', myMessage);
+			break;
+		case 'sendBtn':
+			if(socket && socket.send) socket.send(msg.value);
+			break;
+	}
+});
+</script>
+</body>
+</html>

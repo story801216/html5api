@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Drag and drop</title>
+
+	<style>
+		.container {
+			position: relative;
+			width: 800px;
+			height: 600px;
+			background-color: #b0e9ff;
+		}
+	</style>
+</head>
+<body>
+<div class="container">從檔案管理員拖檔案進來</div>
+<script src="javascripts/jquery-3.4.1.js"></script>
+<script>
+	const container = $('.container');
+	container.on('dragover', function(event){
+		event.preventDefault();
+	});
+	container.on('dragenter', function(event){
+		container.css('background-color','#ffe055');
+	});
+	container.on('dragleave', function(event){
+		container.css('background-color','#b0e9ff');
+	});
+	container.on('drop', function(event){
+		container.css('background-color','#b0e9ff');
+		event.preventDefault(); // 避免預設行為
+		const dt = event.originalEvent.dataTransfer;
+		for(let i=0; i<dt.files.length; i++){
+			container.append('<br>' + dt.files[i].name);
+		}
+		console.log(dt.files);
+		console.log(dt); // 看不到 files 的內容
+	});
+</script>
+
+</body>
+</html>

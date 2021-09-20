@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise 物件</title>
+</head>
+<body>
+<script>
+    console.log('111111111');
+    new Promise((resolve, reject)=>{
+        setTimeout(function(){
+            console.log('222222');
+            resolve('oooook')
+        }, 1000+Math.random()*1000)
+
+    })
+        .then(r=>{
+            console.log(`r: ${r}`);
+            return 2;
+        })
+        .then(r=>{
+            console.log(`r: ${r}`);
+            return 3;
+        })
+        .then(r=>{
+            console.log(`r: ${r}`);
+            return 4;
+        })
+    console.log('33333333');
+</script>
+</body>
+</html>

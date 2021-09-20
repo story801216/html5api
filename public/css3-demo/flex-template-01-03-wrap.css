@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    /* flex-wrap: nowrap; 預設值 */
+    flex-wrap: wrap;
+    /* flex-flow: row wrap; */
+    /* justify-content: flex-start; 預設值 水平位置 */
+    justify-content: space-around;
+
+    /* align-items: center; 垂直位置 */
+}
+
+.container > div {
+    flex: auto;
+    width: 45%;
+    max-width: 45%;
+}
+

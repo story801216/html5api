@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>陣列排序</title>
+</head>
+<body>
+<div id="info">
+</div>
+
+<script>
+    const str = "美債殖利率再度竄升，引發美股沉重賣壓出籠，道瓊工業指數跌345.95點";
+    const ar = str.split('');
+    console.log(ar.join(','));
+    ar.sort();
+    console.log(ar.join(','));
+
+    const ar2 = [];
+
+    for(let i=0; i<20; i++){
+        ar2.push( Math.floor(Math.random()*20));
+    }
+    console.log(ar2.join(','));
+    ar2.sort();
+    console.log(ar2.join(','));
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Notification</title>
+</head>
+<body>
+
+<button style="display: none">show a notification</button>
+<script>
+const btn = document.querySelector('button');
+const checkNotification = function(){
+	console.log(Notification.permission);
+	switch (Notification.permission) {
+		case 'granted':
+			console.log('允許');
+			btn.style.display = 'block';
+			break;
+		case 'denied':
+			console.log('封鎖');
+			break;
+		default:
+			console.log('未決定');
+			// 要求權限
+			Notification.requestPermission(function(){
+				if(Notification.permission==='granted'){
+					btn.style.display = 'block';
+				}
+			});
+	}
+};
+
+checkNotification();
+
+btn.onclick = function(){
+	let ntf = new Notification('MyTitle', {
+		body: '說明文字',
+		icon: './images/icons/icon-144x144.png'
+	});
+};
+</script>
+</body>
+</html>

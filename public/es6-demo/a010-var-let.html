@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>var 和 let 的差異</title>
+</head>
+<body>
+<script>
+    var aaa = 123;
+    let bbb = 456;
+
+    console.log('aaa:', aaa);
+    console.log('window.aaa:', window.aaa);
+
+    console.log('bbb:', bbb);
+    console.log('window.bbb:', window.bbb); // undefined
+
+    // var alert = 'aaaa'; // 會覆蓋掉原本的功能
+
+    const obj = {
+        name: 'Bill',
+        age: 25,
+    }
+    obj.age = 22; // 可以修改
+    console.log('obj:', obj);
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>async - await</title>
+</head>
+<body>
+<script>
+    function myPromise(){
+        return new Promise((resolve, reject)=>{
+            const rand = 1000+Math.floor(Math.random()*1000);
+            setTimeout(function(){
+                resolve(rand)
+            }, rand);
+        });
+    }
+
+    async function myRun() {
+        try {
+            console.log('1:', await myPromise());
+            console.log('2:', await myPromise());
+            console.log('3:', await myPromise());
+        } catch(ex) {
+        }
+    }
+
+    (async function () {
+        console.log('1a:', await myPromise());
+        console.log('2a:', await myPromise());
+        console.log('3a:', await myPromise());
+    }());
+
+    (async ()=>{
+        console.log('1b:', await myPromise());
+        console.log('2b:', await myPromise());
+        console.log('3b:', await myPromise());
+    })();
+</script>
+</body>
+</html>

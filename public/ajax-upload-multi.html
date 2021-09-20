@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<form action="" name="form1" onsubmit="return false;">
+	<label for="myFiles">選了就上傳</label>
+	<input type="file" name="myFiles" id="myFiles" accept="image/*" multiple><br>
+	<div id="img-container"></div>
+	<textarea name="description" id="description" cols="50" readonly></textarea>
+</form>
+<script>
+const imgCont = document.querySelector('#img-container');
+myFiles.addEventListener('change', event=>{
+	const fd = new FormData(document.form1);
+	fetch('/uploads/multiple', {
+		method: 'POST',
+		body: fd,
+	})
+		.then(response=>response.json())
+		.then(ar=>{
+			description.value = JSON.stringify(ar);
+			imgCont.innerHTML = '';
+			ar.forEach(el=>{
+				imgCont.innerHTML += `<img src="${el}" alt="" width="300px">`;
+			});
+		});
+});
+</script>
+</body>
+</html>

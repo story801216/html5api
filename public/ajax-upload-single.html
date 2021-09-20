@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<form action="" name="form1" onsubmit="return doAjax();" enctype="multipart/form-data">
+	<label for="user">姓名</label>
+	<input type="text" name="user" id="user"><br>
+	<label for="avatar">大頭貼</label>
+	<input type="file" name="avatar" id="avatar" accept="image/*"><br>
+	<img src="" alt="" id="avatar-img" width="300px"><br>
+	<label for="description">簡介</label><br>
+	<textarea name="description" id="description" cols="50"></textarea><br>
+	<button type="submit">上傳</button>
+</form>
+<script>
+// 取得原有的內容
+fetch('/json/profile.json')
+	.then(response=>response.json())
+	.then(obj=>{
+		user.value = obj.user || '';
+		document.querySelector('#avatar-img').src = obj.avatar || '';
+		description.value = obj.description || '';
+	})
+	.catch(ex=>console.log('ex:', ex));
+
+// 選擇檔案時預覽
+avatar.addEventListener('change', event=>{
+	const reader = new FileReader();
+	reader.addEventListener('load', event=>{
+		document.querySelector('#avatar-img').src = reader.result;
+	});
+	if(avatar.files[0]){
+		reader.readAsDataURL(avatar.files[0]); // 讀取並轉換為 base64 格式
+	}
+});
+
+const doAjax = ()=>{
+	const fd = new FormData(document.form1);
+	fetch('/uploads/profile', {
+		method: 'POST',
+		body: fd,
+	})
+		.then(response=>response.json())
+		.then(obj=>console.log(obj));
+	return false;
+};
+</script>
+</body>
+</html>

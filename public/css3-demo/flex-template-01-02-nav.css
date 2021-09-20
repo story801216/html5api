@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container > div {
+    display: none;
+}
+
+.main-nav > ul {
+    display: flex;
+    background-color: darkblue;
+    list-style: none;
+}
+
+.main-nav > ul > li {
+    color: white;
+    width: 6rem;
+    text-align: center;
+}
+.main-nav > ul > li > a {
+    text-decoration: none;
+    color: white;
+    width: 100%;
+}
+
+.main-nav > ul > li:hover {
+    background-color: blue;
+}
+
+@media (max-width: 640px) {
+    .main-nav > ul {
+        flex-direction: column;
+    }
+    .main-nav > ul > li {
+        width: auto;
+    }
+}

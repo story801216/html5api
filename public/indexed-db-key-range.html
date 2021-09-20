@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+	const info = document.querySelector('#info');
+	let db;
+	const errorHandler = event=>{
+		info.innerHTML += `error: ${event.target.error}<br>`;
+	};
+	const dbOpenSuccess = event=>{
+		db = event.target.result;
+		const trans = db.transaction(['addressBook'], 'readonly');
+		const store = trans.objectStore('addressBook');
+
+		// const dbReq = store.openCursor(IDBKeyRange.upperBound(3)); // 使用 primary key
+
+		// 使用 ageIndex < 30
+		// const dbReq = store.index('ageIndex').openCursor(IDBKeyRange.upperBound(30));
+
+		// 使用 emailIndex < 'i'
+		const dbReq = store.index('emailIndex').openCursor(IDBKeyRange.upperBound('i'));
+
+		dbReq.onsuccess = event=>{
+			const result = event.target.result; // IDBCursorWithValue
+			if(!result) return; // 讀到最後沒資料時
+			info.innerHTML += JSON.stringify(result.value) + '<br>';
+			result.continue(); // 讀取下一筆
+		};
+	};
+	const openDBReq = indexedDB.open('mydb', 1);
+	openDBReq.addEventListener('error', errorHandler);
+	openDBReq.addEventListener('success', dbOpenSuccess);
+</script>
+</body>
+</html>

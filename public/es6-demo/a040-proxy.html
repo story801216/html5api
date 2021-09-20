@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>proxy 的用法</title>
+</head>
+<body>
+<script>
+const myTarget = {
+    name: 'David',
+    age: 20,
+    ageIncrease: function(){
+        this.age ++
+    }
+}
+const myHandler = {
+    get: function(target, prop){
+        console.log('get:', JSON.stringify(target), prop);
+        return target[prop];
+    },
+    set: function(target, prop, value){
+        console.log('set:', target, prop, value);
+        if(prop==='age' && isNaN(value/1)){
+            throw new Error('number only');
+        } else {
+            target[prop] = value;
+        }
+    },
+}
+
+const proxy = new Proxy(myTarget, myHandler);
+console.log(proxy.age);
+proxy.age = "77";
+console.log(myTarget);
+</script>
+</body>
+</html>

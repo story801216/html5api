@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    height: 300px;
+    background-color: lightgray;
+}
+
+.c2 {
+    order: 1;  /* 順序權重 */
+    flex-grow: 1;  /* 寬度權重 */
+    flex-shrink: 0;  /* 寬度被壓縮時 */
+}
+.c3 {
+    flex-basis: 200px;  /* 基本寬度 */
+}
+.c1 {
+    /* flex: grow shrink basis; */
+    flex: 2 0 300px;
+    align-self: center;
+}
+

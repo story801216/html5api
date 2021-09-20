@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 1px dashed green;
+		}
+	</style>
+</head>
+<body>
+<canvas id="myCanvas" width="600" height="400"></canvas>
+<br>
+<select id="myWay">
+	<option value="0">原始大小</option>
+	<option value="1">和畫布同寬(等比例縮放)</option>
+	<option value="2">和畫布同高(等比例縮放)</option>
+</select>
+
+<script>
+	const myCanvas = document.querySelector('#myCanvas');
+	const ctx = myCanvas.getContext('2d');
+	let w, h;
+
+	const showImg = ()=>{
+		ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+		switch(myWay.value){
+			case '0':
+				ctx.drawImage(img, 0, 0);
+				break;
+			case '1':
+				h = img.height * myCanvas.width/img.width;
+				ctx.drawImage(img, 0, 0, myCanvas.width, h);
+				break;
+			case '2':
+				w = img.width * myCanvas.height/img.height;
+				ctx.drawImage(img, 0, 0, w, myCanvas.height);
+				break;
+		}
+	};
+	const img = new Image();
+	img.addEventListener('load', showImg);
+	img.src = 'images/bunny-poster.png';
+	myWay.addEventListener('change', showImg);
+
+	// 定點繪製
+	// drawImage(image, x, y)
+	// 縮放
+	// drawImage(image, x, y, width, height)
+	// 切割影像
+	// drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+</script>
+</body>
+</html>

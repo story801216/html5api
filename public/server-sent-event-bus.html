@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		#map {
+			position: relative;
+			background-image: url(images/map-bus-1.png);
+			background-size: cover;
+			width: 1314px;
+			height: 868px;
+			/*opacity: .5;*/
+		}
+		.bus {
+			position: absolute;
+			background-color: #2c47ff;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+<!--
+// 右上角位置： 國父紀念館站/@25.0413848,121.5553443
+// 左下角位置： 師大夜市/@25.0247998,121.5271883
+台北市交通開放資料： https://taipeicity.github.io/traffic_realtime/
+-->
+<div id="map"></div>
+<div id="info"></div>
+<script>
+	const map = document.querySelector('#map');
+	const es = new EventSource('/bus-loc-sse');
+
+	es.addEventListener('open', function(event) {
+		map.style.opacity = 0.5;
+		console.log(new Date().toLocaleString(), event);
+	});
+	es.addEventListener('message', function(event) {
+		const json = JSON.parse(event.data);
+		map.innerHTML = '';
+		json.forEach(item=>{
+		    const lon = item.Longitude * 1;
+		    const lat = item.Latitude * 1;
+		    const el = document.createElement('div');
+		    el.innerHTML = item.BusID;
+		    el.setAttribute('data-RouteID', item.RouteID);
+		    el.className = 'bus';
+		    el.style.left = Math.floor((lon-121.5271883)/(121.5553443-121.5271883)*1314) + 'px';
+		    el.style.top = 868-Math.floor((lat-25.0247998)/(25.0413848-25.0247998)*868) + 'px';
+            // console.log('lon:', lon, (lon-121.5271883)/(121.5553443-121.5271883));
+            // console.log('lat:', lat, (lat-25.0247998)/(25.0413848-25.0247998));
+		    map.appendChild(el);
+		});
+	});
+	es.addEventListener('error', function(event) {
+		console.log(new Date().toLocaleString(), event);
+	});
+</script>
+</body>
+</html>

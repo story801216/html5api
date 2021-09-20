@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>物件陣列排序</title>
+</head>
+<body>
+<div id="info">
+</div>
+
+<script>
+    const people = [
+        {
+            name: "carl",
+            age: 26,
+        }, {
+            name: "Bill",
+            age: 20,
+        }, {
+            name: "flora",
+            age: 22,
+        }, {
+            name: "aaron",
+            age: 25,
+        }, {
+            name: "bob",
+            age: 30,
+        },
+    ]
+
+    people.sort((a, b)=>{
+        // console.log(`a: ${a}, b: ${b}`);
+        // return a.age-b.age; // 由小到大
+        return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+    });
+    console.log(people);
+</script>
+</body>
+</html>

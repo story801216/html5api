@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>深層複製</title>
+</head>
+<body>
+<script>
+const p1 = {
+    name: "carl",
+    age: 26,
+    gender: "male",
+    data: {a:10, b:20}
+}
+const p2 = JSON.parse(JSON.stringify(p1));
+p1.name = "David";
+p1.data.a = 999;
+console.log(p1)
+console.log(p2)
+
+// ----
+const a1 = {
+    name: "carl",
+    age: 26,
+};
+const a2 = {
+    name: "bill",
+    age: 20,
+};
+const a3 = {
+    name: "flora",
+    age: 22,
+};
+a1.next = a2;
+a2.next = a3;
+a3.next = a1;
+
+const str = JSON.stringify(a1);
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    /* display: inline-grid; */
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.container > div {
+    width: 300px;
+    text-align: center;
+}
+

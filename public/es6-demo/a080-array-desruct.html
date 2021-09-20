@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>陣列解構</title>
+</head>
+<body>
+<script>
+const ar = [2,8,5,7,10];
+console.log(Math.max(...ar));
+
+function f(p1, ...params){
+    console.log(params);
+}
+f(2,4,6,7,13);
+</script>
+</body>
+</html>

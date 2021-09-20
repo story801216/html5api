@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    position: relative;
+    font-size: 0; /* 讓空白字元不佔寬度 */
+}
+
+.container .box {
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 2rem;
+    width: 50%;
+    height: 80px;
+    border-radius: 10px;
+    background-color: rgb(142, 178, 245);
+    text-align: center;
+    line-height: 80px;
+    border: 1px solid gray;
+}
+
+/* 540px 以上 */
+@media (min-width: 540px) {
+    .container .box {
+        width: 33.3%;
+    }
+}
+
+/* 720px 以上 */
+@media (min-width: 720px) {
+    .container .box {
+        width: 25%;
+    }
+}
+
+/* 960px 以上 */
+@media (min-width: 960px) {
+    .container .box {
+        width: 20%;
+    }
+}
+
+
+
+
+
+

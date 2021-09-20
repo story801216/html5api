@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @keyframes action1 {
+            0% {left: 0%}
+            100% {left: 93%;}
+        }
+        .rect {
+            position: absolute;
+            width: 640px;
+            height: 480px;
+            background-color: #DDD;
+        }
+        .ball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 50px;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+        }
+        #b1 {
+            background-color: rgb(243, 129, 84);
+            top: 50px;
+            animation: action1 3s linear 1s infinite;
+        }
+        #b2 {
+            background-color: rgb(248, 202, 116);
+            top: 100px;
+            animation: action1 3s ease 1s infinite;
+        }
+        #b3 {
+            background-color: rgb(167, 223, 130);
+            top: 150px;
+            animation: action1 3s ease-in 1s infinite;
+        }
+        #b4 {
+            background-color: rgb(103, 103, 241);
+            top: 200px;
+            animation: action1 3s ease-out 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="rect">
+        <div class="ball" id="b1">1</div>
+        <div class="ball" id="b2">2</div>
+        <div class="ball" id="b3">3</div>
+        <div class="ball" id="b4">4</div>
+    </div>
+</body>
+</html>

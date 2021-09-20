@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 1px dashed green;
+		}
+	</style>
+</head>
+<body>
+<!-- 預設 300px * 150px -->
+<canvas id="myCanvas" width="600" height="400"></canvas>
+<script>
+	const myCanvas = document.querySelector('#myCanvas');
+	const cnt = myCanvas.getContext('2d');
+
+	cnt.beginPath(); // 重置 path
+	cnt.moveTo(50, 50);
+	cnt.lineTo(200, 300);
+	cnt.lineTo(400, 50);
+	cnt.strokeStyle = 'orange'; // 設定畫筆顏色
+	cnt.lineWidth = 20;// 設定畫筆粗細
+	cnt.stroke(); // 在路徑上畫線
+
+	cnt.beginPath(); // 重置 path
+	cnt.moveTo(50, 50);
+	cnt.lineTo(200, 300);
+	cnt.lineTo(400, 50);
+	cnt.strokeStyle = '#FF0000'; // 設定畫筆顏色
+	cnt.lineWidth = 1;// 設定畫筆粗細
+	cnt.stroke(); // 在路徑上畫線
+</script>
+</body>
+</html>
