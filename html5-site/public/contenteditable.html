@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #info{
+            border: 1px solid;
+            padding: 0.3rem;
+        }
+
+        #info:focus{
+            background-color: #f8bcbc;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <!-- contenteditable:全局屬性 是一個枚舉屬性，表示元素是否可被用戶編輯。如果可以，瀏覽器會修改元素的部件以允許編輯。-->
+    <!-- true 或空字符串，表示元素是可編輯的；false 表示元素不是可編輯的。 -->
+    
+    <div id="info" contenteditable="true">
+        123
+    </div>
+    <script>
+
+        const info = document.querySelector('#info');
+
+        info.addEventListener('input', () => {
+            console.log(info.innerHTML);
+            console.log(info.innerText);
+        });
+
+
+
+
+
+    </script>
+</body>
+</html>
