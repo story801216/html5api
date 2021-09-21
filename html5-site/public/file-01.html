@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="myi" multiple>
+
+
+<script>
+    const myinput = document.querySelector('#myi');
+
+    myinput.addEventListener('change', event=>{
+        console.log(myinput.files);
+        console.log(myinput.files[0]);
+    });
+
+</script>
+
+
+
+</body>
+</html>

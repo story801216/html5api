@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="myi" accept="image/*">
+
+
+<script>
+    const myinput = document.querySelector('#myi');
+    const reader = new FileReader();
+
+    reader.addEventListener('load', event => {
+        console.log(reader.result);
+    });
+
+    myinput.addEventListener('change', event=>{
+        // console.log(myinput.files[0]);
+        reader.readAsDataURL(myinput.files[0]);
+    });
+
+</script>
+
+
+
+</body>
+</html>
