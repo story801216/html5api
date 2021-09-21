@@ -26,14 +26,19 @@
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        // ctx.beginPath();
-        // ctx.moveTo(50, 50);
-        // ctx.lineTo(200, 300);
-        // ctx.lineTo(400, 50);
 
-        // ctx.stroke(); // 套用線條樣式
 
         const myMDown = event =>{
+            console.log(event.button,event.buttons); // 判斷按下的是左鍵還是右鍵
+
+            // 忽略滑鼠右鍵
+            if (event.button===2 && event.buttons===2){
+                return;
+            };
+
+
+
+
             ctx.moveTo(event.offsetX, event.offsetY);
             myCanvas.addEventListener('mousemove',myMMove);
         
