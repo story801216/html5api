@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-line-02-draw</title>
+    <style>
+        canvas{
+            border: 1px dotted black
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="myCanvas" width="800px" height="600px"></canvas>
+    
+
+    <script>
+        const myCanvas = document.querySelector('#myCanvas');
+
+        const ctx = myCanvas.getContext('2d');
+        ctx.beginPath();
+        ctx.strokeStyle = ('red');
+        ctx.lineWidth = 10;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // ctx.beginPath();
+        // ctx.moveTo(50, 50);
+        // ctx.lineTo(200, 300);
+        // ctx.lineTo(400, 50);
+
+        // ctx.stroke(); // 套用線條樣式
+
+        const myMDown = event =>{
+            ctx.moveTo(event.offsetX, event.offsetY);
+            myCanvas.addEventListener('mousemove',myMMove);
+        
+        };
+        const myMUP = event =>{
+            myCanvas.removeEventListener('mousemove',myMMove);
+        
+        };
+        const myMMove = event =>{
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+        
+        };
+
+        myCanvas.addEventListener('mousedown', myMDown);
+        window.addEventListener('mouseup', myMUP);
+
+
+
+    </script>
+</body>
+</html>
