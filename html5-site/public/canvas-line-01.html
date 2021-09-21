@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-line</title>
+    <style>
+        canvas{
+            border: 1px dotted black
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="myCanvas" width="800px" height="600px"></canvas>
+    
+
+    <script>
+        const myCanvas = document.querySelector('#myCanvas');
+
+        const ctx = myCanvas.getContext('2d');
+
+        ctx.strokeStyle = ('red');
+        ctx.lineWidth = 10;
+
+        ctx.beginPath();
+        ctx.moveTo(50, 50);
+        ctx.lineTo(200, 300);
+        ctx.lineTo(400, 50);
+
+        ctx.stroke(); // 套用線條樣式
+
+
+
+    </script>
+</body>
+</html>
