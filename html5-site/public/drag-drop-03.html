@@ -55,7 +55,7 @@
     const ballDragStarted = event => {
         console.log(event.type, event.target);
 
-        event.dataTransfer.setData('text', event.target.id);  // 1. 設定
+        event.dataTransfer.setData('text', event.target.id);  // 1. 開始拖拉時就把ID存起來
     };
 
     balls.forEach(b=>{
@@ -66,13 +66,13 @@
         event.preventDefault();  // 沒有 preventDefault() 就不會觸發 drop 事件
     });
     rect.addEventListener('drop', event => {
-        const dId = event.dataTransfer.getData('text');  // 2. 取出
+        const dId = event.dataTransfer.getData('text');  // 2. drop的時候就把ID取出
         console.log( dId );
         const dragTarget = document.querySelector('#' + dId);
         dragTarget.style.position = 'static';
         dragTarget.style.display = 'inline-block';
         console.log( 'dragTarget:', dragTarget );
-        rect.appendChild(dragTarget);
+        rect.appendChild(dragTarget); // 3. 再把資料存入矩形裡面
     });
 
 </script>
