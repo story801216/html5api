@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+        .ball {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: red;
+            left: 100px;
+            top: 50px;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="ball" id="b1">1</div>
+    <div class="ball" id="b2" style="background-color: blue; top: 150px;">2</div>
+    <div class="ball" id="b3" style="background-color: green; top: 250px;">3</div>
+
+</div>
+
+
+<script>
+    const container = document.querySelector('.container');
+    const balls = document.querySelectorAll('.ball');
+
+    const mDown = event => {
+        const t = event.target;
+        if(t.classList.contains('ball')){
+            console.log(event.target);
+            container.addEventListener('mousemove', mMove);
+        }
+    };
+    const mUp = event => {
+        container.removeEventListener('mousemove', mMove);
+    };
+    const mMove = event => {
+
+    };
+    container.addEventListener('mousedown', mDown);
+    window.addEventListener('mouseup', mUp);
+
+
+</script>
+
+
+</body>
+</html>
