@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: green 1px dotted;
+        }
+        .ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            background-color: #F00;
+            color: white;
+            border: gray 1px solid;
+            pointer-events: none; /* 不感應滑鼠的動作 */
+        }
+    </style>
+</head>
+<body>
+<div id="rect"></div>
+<button onclick="showData()">show data</button>
+<br>
+<script src="../lib/ball.js"></script>
+<script>
+    const rect = document.querySelector('#rect');
+    const balls = [];
+
+    const MDown = event=>{
+        rect.addEventListener('mousemove', MMove);  // 註冊偵聽
+    };
+    const MUp = event=>{
+        rect.removeEventListener('mousemove', MMove);  // 解除偵聽
+    };
+    const MMove = event=>{
+        let b = new Ball(rect, {x: event.offsetX, y: event.offsetY});
+        b.x -= b.size/2;
+        b.y -= b.size/2;
+        balls.push(b);
+    };
+    rect.addEventListener('mousedown', MDown);
+    window.addEventListener('mouseup', MUp);
+
+    function showData(){
+        let data = balls.map(b => b.toJSON());
+
+        localStorage.setItem('balls-draw', JSON.stringify(data))
+        alert('儲存完成')
+    }
+</script>
+</body>
+</html>
