@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+
+        .rect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background-color: #96becd;
+            left: 300px;
+            top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="rect"></div>
+</div>
+
+
+<script>
+    const rect = document.querySelector('.rect');
+    rect.addEventListener('dragenter', event => {
+        rect.style.backgroundColor = '#eea77b';
+    });
+    rect.addEventListener('dragleave', event => {
+        rect.style.backgroundColor = '#96becd';
+    });
+    rect.addEventListener('dragover', event=>event.preventDefault());
+    rect.addEventListener('drop', event => {
+        event.preventDefault();  // 避免瀏覽器去開啟該檔案
+        console.log( event.dataTransfer.files );
+    });
+
+</script>
+
+
+</body>
+</html>
