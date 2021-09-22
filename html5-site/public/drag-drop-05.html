@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+        .ball {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+        .rect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background-color: #96becd;
+            left: 300px;
+            top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="rect" style="left: 50px">
+        <div class="ball" draggable="true" id="b1">1</div>
+        <div class="ball" draggable="true" id="b2" style="background-color: blue;">2</div>
+        <div class="ball" draggable="true" id="b3" style="background-color: green;">3</div>
+    </div>
+
+
+    <div class="rect"></div>
+</div>
+
+
+<script>
+    const balls = document.querySelectorAll('.ball');
+    const rects = document.querySelectorAll('.rect');
+
+    const ballDragStarted = event => {
+        console.log(event.type, event.target);
+        event.dataTransfer.setData('text', event.target.id);  // 1. 設定
+    };
+
+    const ballDroped = event => {
+        const dId = event.dataTransfer.getData('text');  // 2. 取出
+        event.target.appendChild( document.querySelector('#' + dId) );
+    };
+
+
+    balls.forEach(b=>{
+        b.addEventListener('dragstart', ballDragStarted);
+    });
+
+    rects.forEach(r=>{
+        r.addEventListener('dragover', event=>event.preventDefault());
+        r.addEventListener('drop', ballDroped);
+    });
+</script>
+
+
+</body>
+</html>
