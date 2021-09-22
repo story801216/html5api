@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+        .ball {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: red;
+            left: 100px;
+            top: 50px;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+        .rect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background-color: #96becd;
+            left: 300px;
+            top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="ball" draggable="true" id="b1">1</div>
+    <div class="ball" draggable="true" id="b2" style="background-color: blue; top: 150px;">2</div>
+    <div class="ball" draggable="true" id="b3" style="background-color: green; top: 250px;">3</div>
+
+    <div class="rect"></div>
+</div>
+
+
+<script>
+    const balls = document.querySelectorAll('.ball');
+    const rect = document.querySelector('.rect');
+
+    const ballDragStarted = event => {
+        console.log(event.type, event.target);
+
+        event.dataTransfer.setData('text', event.target.id);  // 1. 設定
+    };
+
+    balls.forEach(b=>{
+        b.addEventListener('dragstart', ballDragStarted);
+    });
+
+    rect.addEventListener('dragover', event=>{
+        event.preventDefault();  // 沒有 preventDefault() 就不會觸發 drop 事件
+    });
+    rect.addEventListener('drop', event => {
+        console.log( event.dataTransfer.getData('text'));  // 2. 取出
+    });
+
+</script>
+
+
+</body>
+</html>
