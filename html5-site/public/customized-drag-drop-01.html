@@ -7,6 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
         .container {
             position: relative;
             width: 800px;
@@ -41,19 +45,25 @@
 <script>
     const container = document.querySelector('.container');
     const balls = document.querySelectorAll('.ball');
+    let target = null; // 記錄拖拉的對象
 
     const mDown = event => {
         const t = event.target;
         if(t.classList.contains('ball')){
             console.log(event.target);
+            target = t;
             container.addEventListener('mousemove', mMove);
         }
     };
     const mUp = event => {
+        target = null;
         container.removeEventListener('mousemove', mMove);
     };
     const mMove = event => {
-
+        if(target){
+            target.style.left = event.pageX + 'px';
+            target.style.top = event.pageY + 'px';
+        }
     };
     container.addEventListener('mousedown', mDown);
     window.addEventListener('mouseup', mUp);
