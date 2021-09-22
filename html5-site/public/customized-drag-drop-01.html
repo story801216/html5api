@@ -28,6 +28,7 @@
             color: white;
             text-align: center;
             line-height: 60px;
+            cursor: pointer;
         }
 
     </style>
@@ -51,7 +52,11 @@
         const t = event.target;
         if(t.classList.contains('ball')){
             console.log(event.target);
-            target = t;
+            target = {
+                t,
+                x: event.offsetX,
+                y: event.offsetY,
+            };
             container.addEventListener('mousemove', mMove);
         }
     };
@@ -61,8 +66,8 @@
     };
     const mMove = event => {
         if(target){
-            target.style.left = event.pageX + 'px';
-            target.style.top = event.pageY + 'px';
+            target.t.style.left = (event.pageX - target.x) + 'px';
+            target.t.style.top = (event.pageY - target.y) + 'px';
         }
     };
     container.addEventListener('mousedown', mDown);
