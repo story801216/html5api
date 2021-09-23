@@ -22,7 +22,7 @@
     })
     es.addEventListener('message', event => {
         console.log(event.lastEventId, event.data);
-        info.innerHTML = event.data;
+        info.innerHTML = event.lastEventId + ':'+ event.data;
         
     })
 
