@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="info"></div>
+
+<script>
+    const info = document.querySelector('#info');
+
+    const es = new EventSource('/try-sse');
+
+    es.addEventListener('open', event => {
+        console.log('open:',event.type, new Date().toString());
+
+
+    })
+    es.addEventListener('message', event => {
+        console.log(event.lastEventId, event.data);
+        info.innerHTML = event.data;
+        
+    })
+
+    es.addEventListener('error', event => {
+        console.log('error:',event.type, new Date().toString());
+        
+})
+
+
+
+
+</script>
+</body>
+</html>
