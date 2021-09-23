@@ -25,6 +25,25 @@ app.use('/', serveIndex('public',{icons:true}));
 
 app.use('/users', usersRouter);
 
+app.use('/try-sse', (req, res) =>{
+  let id = 30
+
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  })
+
+  setInterval(function(){
+    res.write('id: ' + id++ + '\n');
+    res.write('data: ' + new Date().toLocaleString() + '\n\n');
+  }, 2000);
+
+});
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
