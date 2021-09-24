@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick=" doConnect()">連線</button>
+    <div id="info"></div>
+
+
+<script>
+    const info = document.querySelector('#info')
+    let socket;
+
+    const handle = event =>{
+        info.innerHTML += event.type + ': \n';
+        if(event.data){
+            info.innerHTML += event.data + '\n';
+        }
+    }
+
+    function doConnect(){
+        socket = new WebSocket('ws://localhost:3000');
+
+        socket.addEventListener('open', handle);
+        socket.addEventListener('message', handle);
+        socket.addEventListener('close', handle);
+        
+    }
+
+
+
+
+</script>
+</body>
+</html>
