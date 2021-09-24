@@ -20,6 +20,9 @@
         if(event.data){
             info.innerHTML += event.data.toString() + '\n';
         }
+        if(event.type==='open'){
+            socket.send('中文')
+        }
     }
 
     function doConnect(){
