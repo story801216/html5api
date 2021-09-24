@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="info"></div>
+
+<script>
+    const map = new Map();
+
+    const obj = {};
+
+    const objA = {name:'Aaron'};
+    const objB = {name:'Bill'};
+
+    obj[objA] = 123;
+    obj[objB] = 456;
+
+    console.log('1:', obj[objA] ); // [object Object]:https://reurl.cc/n5E7ZD
+
+    map.set(objA, 'abc');
+    map.set(objB, 'def');
+    map.set({}, '111');
+    map.set({}, '222');
+    console.log('2:', map.get(objA));
+
+    for(let k of [...map.keys()]){
+        console.log('key:', k );
+        console.log('value:', map.get(k) );
+    }
+    console.log('----------------');
+
+    const keys = map.keys();
+    let k;
+    while(k=keys.next().value){
+        console.log(k);
+    }
+
+</script>
+</body>
+</html>
