@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="info"></div>
+
+<script>
+    const map = new Map();
+
+    const objA = {name:'Aaron'};
+    const objB = {name:'Bill'};
+
+    map.set(objA, 'abc');
+    map.set(objB, 'def');
+    map.set({}, '111');
+    map.set({}, '222');
+
+    console.log('----------------');
+
+    let keys = map.keys();
+    let item;
+    while(item=keys.next()){
+        console.log(item);
+        if(! item.value){
+            break;
+        }
+    }
+    console.log('----------------');
+    keys = map.keys();
+
+    while(item=keys.next()){
+        if(item.done){
+            break;
+        }
+        console.log(item);
+    }
+</script>
+</body>
+</html>
