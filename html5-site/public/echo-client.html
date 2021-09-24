@@ -8,6 +8,10 @@
 </head>
 <body>
     <button onclick=" doConnect()">連線</button>
+    <button onclick=" doClose()">斷線</button>
+    <br>
+    <input type="text" id="inp">
+    <button onclick="doSend()">送出</button>
     <div id="info"></div>
 
 
@@ -20,9 +24,9 @@
         if(event.data){
             info.innerHTML += event.data.toString() + '\n';
         }
-        if(event.type==='open'){
-            socket.send('中文')
-        }
+        // if(event.type==='open'){
+        //     socket.send('中文')
+        // }
     }
 
     function doConnect(){
@@ -33,6 +37,19 @@
         socket.addEventListener('close', handle);
         
     }
+
+
+    function doSend(){
+        if (socket && socket.readyState===WebSocket.OPEN){
+            socket.send(document.querySelector('#inp').value);
+        } else{
+            alert('WebSocket 未連線')
+        };
+    };
+
+    function doClose() {
+        socket.close();
+    };
 
 
 
