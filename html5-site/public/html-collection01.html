@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="info"></div>
+<div id="info"></div>
+<div id="info"></div>
+
+<script>
+    // HTMLCollection, NodeList
+
+    console.log(info.length);
+    console.log(info);
+    console.log([...info]);
+
+    let n = 0;
+    for(let i of info){
+        i.innerText =  ++n;
+    }
+
+</script>
+</body>
+</html>
