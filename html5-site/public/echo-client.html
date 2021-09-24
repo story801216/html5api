@@ -18,7 +18,7 @@
     const handle = event =>{
         info.innerHTML += event.type + ': \n';
         if(event.data){
-            info.innerHTML += event.data + '\n';
+            info.innerHTML += event.data.toString() + '\n';
         }
     }
 
