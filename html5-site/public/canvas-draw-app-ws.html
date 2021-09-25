@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		canvas {
+			border: 1px dashed green;
+		}
+	</style>
+</head>
+<body>
+<canvas id="myCanvas" width="600" height="400"></canvas>
+<br>
+<input type="color" id="pColor" value="#0000FF">
+<input type="number" min="1" max="50" step="1" id="pSize" value="5">
+
+<script>
+	const myCanvas = document.querySelector('#myCanvas'),
+		pColor = document.querySelector('#pColor'),
+		pSize = document.querySelector('#pSize'),
+		ctx = myCanvas.getContext('2d');
+	ctx.lineCap = 'round';
+	ctx.lineJoin = 'round';
+
+	let startX , startY;
+
+	const myMsg = event => {
+		console.log(event.data);
+	};
+
+	// 一進入頁面就做連線
+	let socket = new WebSocket('ws://'+location.host);
+
+    socket.addEventListener('message',myMsg);
+
+
+
+
+	const mDown = event=>{
+		window.addEventListener('mouseup', mUp);
+		myCanvas.addEventListener('mousemove', mMove);
+		// ctx.beginPath();
+		// ctx.moveTo(event.offsetX, event.offsetY);
+		startX = event.offsetX;
+		startY = event.offsetY;
+	};
+	const mUp = event=>{
+		window.removeEventListener('mouseup', mUp);
+		myCanvas.removeEventListener('mousemove', mMove);
+	};
+	const mMove = event=>{
+		// ctx.lineTo(event.offsetX, event.offsetY);
+		// ctx.stroke();
+		const data = {  // 線條資料
+			c: pColor.value,
+			s:+ pSize.value,
+			x1:startX, // 起始位置
+			y1:startY,
+			x2:event.offsetX, // 結束位置
+			y2:event.offsetY,
+		};
+
+		if (socket && socket.readyState===WebSocket.OPEN){
+			socket.send(JSON.stringify(data));
+        };
+
+		// 下一條線的起始位置
+		startX = event.offsetX;
+		startY = event.offsetY;
+	};
+
+	myCanvas.addEventListener('mousedown', mDown);
+
+	// 設置畫筆大小顏色
+	const setPen = ()=>{
+		ctx.strokeStyle = pColor.value;
+		ctx.lineWidth = pSize.value;
+	};
+	pColor.addEventListener('change', setPen);
+	pSize.addEventListener('change', setPen);
+	setPen();
+
+
+
+</script>
+</body>
+</html>
