@@ -30,6 +30,23 @@
 
 	const myMsg = event => {
 		console.log(event.data);
+
+		try{
+			const data = JSON.parse(event.data);
+
+            // 設定畫筆顏色粗細
+			ctx.strokeStyle = data.c;
+			ctx.lineWidth = data.s;
+
+			ctx.beginPath();
+			ctx.moveTo(data.x1, data.y1);
+			ctx.lineTo(data.x2, data.y2);
+			ctx.stroke();
+
+
+		}catch(ex){
+
+		}
 	};
 
 	// 一進入頁面就做連線
