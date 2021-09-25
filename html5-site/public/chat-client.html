@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick=" doClose()">斷線</button>
+
+    <br>
+    <input type="text" id="nickname">
+    <button id="nicknameBtn" onclick=" doConnect()">送出暱稱</button>
+    <br>
+
+    <div id='afternickname' style="display:none">
+    <input type="text" id="msg">
+    <button onclick="doSend()">送出</button>
+    <br>
+    <textarea  id="ta" cols="30" rows="10"></textarea>
+    </div>
+
+
+
+<script>
+    const ta = document.querySelector('#ta')
+    let socket;
+
+    const myOpen = event => {
+        if(socket && socket.readyState===WebSocket.OPEN){
+            const nickname = document.querySelector('#nickname');
+            socket.send(nickname.value);
+            nickname.setAttribute('disabled','disabled')
+            document.querySelector('#afternickname').style.display = 'block'; // 連線後就顯示出來
+            document.querySelector('#nicknameBtn').style.display = 'none'; // 連線後按鈕藏起來
+        } else{
+            alert('WebSocket 未連線')
+        };
+    }
+
+
+    const myMag = event => {
+        ta.value += event.data + '\n';
+    }
+
+
+
+
+    function doConnect(){
+        socket = new WebSocket('ws://'+location.host);
+
+        socket.addEventListener('open', myOpen);
+        socket.addEventListener('message',myMag);
+        // socket.addEventListener('close', handle);
+        
+    }
+
+
+    function doSend(){
+        if (msg && socket && socket.readyState===WebSocket.OPEN){
+            socket.send(msg);
+        } else{
+            alert('WebSocket 未連線')
+        };
+    };
+
+    function doClose() {
+        socket.close();
+    };
+
+
+
+
+</script>
+</body>
+</html>
